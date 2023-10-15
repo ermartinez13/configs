@@ -2,6 +2,7 @@
 ;; <from> or <to> expressions cannot be comprised solely of modifer shortcuts (eg. CTOS is invalid but CTOleft_shift is valid)
 ;; general rule format: <from> <to> <conditions> <other options>
 ;; <from> and <to> are required but last two arguments are optional
+;; <condition> for a series of applications cannot take the format: [:iterm :vsc], instead it must be :rules [[<from> <to> vsc <options>] [<from> <to> iterm <option>]]
 {
   :applications {
     :vsc ["^com.microsoft.VSCode$"]
@@ -14,7 +15,7 @@
     }
     {
       :des "right command, alone, to escape [VSCODE]"
-      :rules [[:right_command :right_command :vsc {:alone :escape}]]
+      :rules [[:right_command :right_command :vsc {:alone :escape}] [:right_command :right_command :iterm {:alone :escape}]]
     }
     {
       :des "hyper/caps plus j to down arrow [GLOBAL]"
