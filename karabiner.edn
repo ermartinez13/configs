@@ -1,0 +1,32 @@
+;; `!` applies to modifiers (eg. command, shift, alt, etc.)
+;; <from> or <to> expressions cannot be comprised solely of modifer shortcuts (eg. CTOS is invalid but CTOleft_shift is valid)
+;; general rule format: <from> <to> <conditions> <other options>
+;; <from> and <to> are required but last two arguments are optional
+{
+    :main [
+        {
+            :des "caps lock to hyper [GLOBAL]"
+            :rules [[:caps_lock :!CTOleft_shift nil {:alone :caps_lock}]]
+        }
+        {
+            :des "right command, alone, to esc [VSCODE]"
+            :rules [[:right_command :right_command :vsc {:alone :escape}]]
+        }
+        {
+            :des "hyper/caps plus j to down arrow [GLOBAL]"
+            :rules [[:!!j :down_arrow]]
+        }
+        {
+            :des "hyper/caps plus k to up arrow [GLOBAL]"
+            :rules [[:!!k :up_arrow]]
+        }
+        {
+            :des "hyper/caps plus h to left arrow [GLOBAL]"
+            :rules [[:!!h :left_arrow]]
+        }
+        {
+            :des "hyper/caps plus l to right arrow [GLOBAL]"
+            :rules [[:!!l :right_arrow]]
+        }
+    ] 
+}
