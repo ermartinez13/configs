@@ -3,41 +3,54 @@
 ;; general rule format: <from> <to> <conditions> <other options>
 ;; <from> and <to> are required but last two arguments are optional
 {
-    :applications {
-        :vsc ["^com.microsoft.VSCode$"]
+  :applications {
+    :vsc ["^com.microsoft.VSCode$"]
+    :iterm ["^com.googlecode.iterm2"]
+  }
+  :main [
+    {
+      :des "caps lock to hyper [GLOBAL]"
+      :rules [[:caps_lock :!CTOleft_shift nil {:alone :caps_lock}]]
     }
-    :main [
-        {
-            :des "caps lock to hyper [GLOBAL]"
-            :rules [[:caps_lock :!CTOleft_shift nil {:alone :caps_lock}]]
-        }
-        {
-            :des "right command, alone, to escape [VSCODE]"
-            :rules [[:right_command :right_command :vsc {:alone :escape}]]
-        }
-        {
-            :des "hyper/caps plus j to down arrow [GLOBAL]"
-            :rules [[:!!j :down_arrow]]
-        }
-        {
-            :des "hyper/caps plus k to up arrow [GLOBAL]"
-            :rules [[:!!k :up_arrow]]
-        }
-        {
-            :des "hyper/caps plus h to left arrow [GLOBAL]"
-            :rules [[:!!h :left_arrow]]
-        }
-        {
-            :des "hyper/caps plus l to right arrow [GLOBAL]"
-            :rules [[:!!l :right_arrow]]
-        }
-        {
-            :des "hyper/caps plus i to command + tab [GLOBAL]"
-            :rules [[:!!i :!Ctab]]
-        }
-        {
-            :des "hyper/caps plus u to command + shift + tab [GLOBAL]"
-            :rules [[:!!u :!CStab]]
-        }
+    {
+      :des "right command, alone, to escape [VSCODE]"
+      :rules [[:right_command :right_command :vsc {:alone :escape}]]
+    }
+    {
+      :des "hyper/caps plus j to down arrow [GLOBAL]"
+      :rules [[:!!j :down_arrow]]
+    }
+    {
+      :des "hyper/caps plus k to up arrow [GLOBAL]"
+      :rules [[:!!k :up_arrow]]
+    }
+    {
+      :des "hyper/caps plus h to left arrow [GLOBAL]"
+      :rules [[:!!h :left_arrow]]
+    }
+    {
+      :des "hyper/caps plus l to right arrow [GLOBAL]"
+      :rules [[:!!l :right_arrow]]
+    }
+    {
+      :des "hyper/caps plus i to command + tab [GLOBAL]"
+      :rules [[:!!i :!Ctab]]
+    }
+    {
+      :des "hyper/caps plus u to command + shift + tab [GLOBAL]"
+      :rules [[:!!u :!CStab]]
+    }
+    {
+      :des "hyper/caps plus [ to control + shift + tab [GLOBAL]"
+      :rules [[:!!open_bracket :!TStab]]
+    }
+    {
+      :des "hyper/caps plus ] to control + tab [GLOBAL]"
+      :rules [[:!!close_bracket :!Ttab]]
+    }
+    {
+      :des "hyper/caps plus f to command + control + f [GLOBAL]"
+      :rules [[:!!f :!CTf]]
+    }
     ] 
 }
