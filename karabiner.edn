@@ -7,6 +7,7 @@
   :applications {
     :vsc ["^com.microsoft.VSCode$"]
     :iterm ["^com.googlecode.iterm2"]
+    :typora ["^abnerworks.Typora"]
   }
   :main [
     {
@@ -52,6 +53,14 @@
     {
       :des "hyper/caps plus f to command + control + f [GLOBAL]"
       :rules [[:!!f :!CTf]]
+    }
+    {
+      :des "hyper/caps plus o to control + command + 1 [TYPORA]"
+      :rules [[:!!o :!CT1 :typora]] 
+    }
+    {
+      :des "hyper/caps plus p to control + command + 3 [TYPORA]"
+      :rules [[:!!p :!CT3 :typora]]
     }
     ] 
 }
