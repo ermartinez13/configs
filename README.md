@@ -16,3 +16,6 @@ To apply changes made to `karabiner.edn`, must specify the file location using a
 ```shell
 GOKU_EDN_CONFIG_FILE=~/configs/karabiner.edn goku
 ```
+
+Prerequisites:
+- > Make sure you have a profile named "Default" in Karabiner's GUI tool. --[goku](https://github.com/yqrashawn/GokuRakuJoudo)
