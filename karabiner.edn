@@ -12,7 +12,7 @@
   :main [
     {
       :des "caps lock to hyper [GLOBAL]"
-      :rules [[:caps_lock :!CTOleft_shift nil {:alone :caps_lock}]]
+      :rules [[:caps_lock :!CTOleft_shift nil {:alone {:key :caps_lock :hold_down_ms 200} }]]
     }
     {
       :des "right command, alone, to escape [VSCODE]"
