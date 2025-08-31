@@ -11,7 +11,7 @@
   }
   :main [
     {
-      :des "caps lock to hyper [GLOBAL]"
+      :des "caps lock to hyper key [GLOBAL]"
       :rules [[:caps_lock :!CTOleft_shift nil {:alone {:key :caps_lock :hold_down_ms 200} }]]
     }
     {
@@ -35,23 +35,23 @@
       :rules [[:!!l :right_arrow]]
     }
     {
-      :des "hyper/caps plus i to command + tab [GLOBAL]"
+      :des "hyper/caps plus i to context down (command + tab) [GLOBAL]"
       :rules [[:!!i :!Ctab]]
     }
     {
-      :des "hyper/caps plus u to command + shift + tab [GLOBAL]"
+      :des "hyper/caps plus u to context up (command + shift + tab) [GLOBAL]"
       :rules [[:!!u :!CStab]]
     }
     {
-      :des "hyper/caps plus [ to control + shift + tab [GLOBAL]"
+      :des "hyper/caps plus [ to select previous tab (control + shift + tab) [GLOBAL]"
       :rules [[:!!open_bracket :!TStab]]
     }
     {
-      :des "hyper/caps plus ] to control + tab [GLOBAL]"
+      :des "hyper/caps plus ] to select next tab (control + tab) [GLOBAL]"
       :rules [[:!!close_bracket :!Ttab]]
     }
     {
-      :des "hyper/caps plus f to command + control + f [GLOBAL]"
+      :des "hyper/caps plus f to toggle fullscreen app (command + control + f) [GLOBAL]"
       :rules [[:!!f :!CTf]]
     }
     ] 
