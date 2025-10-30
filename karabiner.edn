@@ -8,6 +8,7 @@
     :vsc ["^com.microsoft.VSCode$"]
     :iterm ["^com.googlecode.iterm2"]
     :typora ["^abnerworks.Typora"]
+    :kiro ["dev.kiro.desktop"]
   }
   :main [
     {
@@ -16,7 +17,7 @@
     }
     {
       :des "right command, alone, to escape [VSCODE]"
-      :rules [[:right_command :right_command :vsc {:alone :escape}] [:right_command :right_command :iterm {:alone :escape}]]
+      :rules [[:right_command :right_command :vsc {:alone :escape}] [:right_command :right_command :iterm {:alone :escape}] [:right_command :right_command :kiro {:alone :escape}]]
     }
     {
       :des "hyper/caps plus j to down arrow [GLOBAL]"
