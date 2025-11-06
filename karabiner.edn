@@ -15,10 +15,10 @@
       :des "caps lock to hyper key [GLOBAL]"
       :rules [[:caps_lock :!CTOleft_shift nil {:alone {:key :caps_lock :hold_down_ms 200} }]]
     }
-    {
-      :des "right command, alone, to escape [VSCODE]"
-      :rules [[:right_command :right_command :vsc {:alone :escape}] [:right_command :right_command :iterm {:alone :escape}] [:right_command :right_command :kiro {:alone :escape}]]
-    }
+    ;; {
+    ;;   :des "right command, alone, to escape [VSCODE]"
+    ;;   :rules [[:right_command :right_command :vsc {:alone :escape}] [:right_command :right_command :iterm {:alone :escape}] [:right_command :right_command :kiro {:alone :escape}]]
+    ;; }
     {
       :des "hyper/caps plus j to down arrow [GLOBAL]"
       :rules [[:!!j :down_arrow]]
