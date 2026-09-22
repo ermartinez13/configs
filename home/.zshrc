@@ -8,5 +8,7 @@ source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 # Ctrl+F accepts the suggestion
 bindkey '^f' autosuggest-accept
 
+eval "$(starship init zsh)"
+
 # Syntax highlighting — keep this last
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
