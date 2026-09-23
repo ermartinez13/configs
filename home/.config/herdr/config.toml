@@ -5,11 +5,14 @@ delivery = "system"
 
 [ui]
 status_indicators = "symbols"
+# Agents panel order: explicit choice of "spaces" (grouped by space, the default) over "priority".
+agent_panel_sort = "spaces"
 
 [theme]
 name = "catppuccin"
 
 auto_switch = false
+
 [keys]
 prefix = "ctrl+b"
 focus_pane_left  = "prefix+h"
@@ -22,7 +25,3 @@ new_tab   = "prefix+c"
 close_tab = "prefix+ampersand"
 workspace_picker = "prefix+w"
 goto             = "prefix+g"
-
-[ui]
-# Agents panel order: explicit choice of "spaces" (grouped by space, the default) over "priority".
-agent_panel_sort = "spaces"
