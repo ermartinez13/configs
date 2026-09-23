@@ -9,6 +9,7 @@ config.window_background_opacity = 0.8
 config.macos_window_background_blur = 50
 config.hide_tab_bar_if_only_one_tab = true
 config.window_decorations = "RESIZE"
+config.native_macos_fullscreen_mode = true
 
 config.keys = {
   -- Rebind OPT-Left, OPT-Right as ALT-b, ALT-f respectively to match
@@ -22,6 +23,12 @@ config.keys = {
     key = "RightArrow",
     mods = "OPT",
     action = act.SendKey({ key = "f", mods = "ALT" }),
+  },
+  -- Toggle fullscreen with CMD-CTRL-f, matching macOS convention
+  {
+    key = "f",
+    mods = "CMD|CTRL",
+    action = act.ToggleFullScreen,
   },
 }
 
