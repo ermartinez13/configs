@@ -15,13 +15,15 @@ auto_switch = false
 
 [keys]
 prefix = "ctrl+b"
-focus_pane_left  = "prefix+h"
-focus_pane_down  = "prefix+j"
-focus_pane_up    = "prefix+k"
-focus_pane_right = "prefix+l"
-split_horizontal = "prefix+double_quote"
-split_vertical    = "prefix+percent"
+focus_pane_left = ["prefix+h", "cmd+alt+left"]
+focus_pane_down = ["prefix+j", "cmd+alt+down"]
+focus_pane_up = ["prefix+k", "cmd+alt+up"]
+focus_pane_right = ["prefix+l", "cmd+alt+right"]
+split_horizontal = ["prefix+double_quote", "cmd+shift+d"]
+split_vertical = ["prefix+percent", "cmd+d"]
 new_tab   = "prefix+c"
 close_tab = "prefix+ampersand"
 workspace_picker = "prefix+w"
 goto             = "prefix+g"
+# Keeps the tmux-compat default (prefix+shift+w) alongside the CMUX-style chord.
+rename_workspace = ["prefix+shift+w", "cmd+shift+r"]
