@@ -47,6 +47,14 @@
       "wezterm"
       "claude-code"
       "codex"
+      "brave-browser"
+      "google-chrome"
+      "notion"
+      "visual-studio-code"
+      "betterdisplay"
+      "nordvpn"
+      "docker-desktop"
+      "spokenly"
     ];
   };
 }

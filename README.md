@@ -30,6 +30,13 @@ The script links this repo to `~/configs`, then runs `darwin-rebuild switch --fl
 | Agent instructions (Claude, Codex, opencode) | `home/AGENTS.md` (one file, linked to all three) |
 | Device config imported via its own app | `accessories/` (Keychron keymap/macros) |
 
+## Installed manually (not in Nix)
+
+- **Karabiner-Elements 15.0.0.** Do not upgrade past it. The Homebrew cask and nixpkgs both ship newer versions, so don't add it to either. Set up a profile named "Default" so goku can write to it.
+- **Brave extensions** (Bitwarden, React DevTools): install them in the browser.
+- **Spokenly model** (Distil-Whisper Large 3.5, English only) and offline mode: set them up in the app.
+- **Contexts** (licensed): download it from contexts.co. The Homebrew cask fails because the vendor's download server has an expired SSL certificate.
+
 ## Machine identity
 
 - Username: the single `user = "main"` line in `flake.nix`. Everything else is threaded from it.
