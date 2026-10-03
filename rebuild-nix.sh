@@ -10,4 +10,12 @@ if [[ ! -L "$CONFIGS" && -e "$CONFIGS" ]]; then
 else
   ln -sfn "$DIR" "$CONFIGS"
 fi
-exec sudo darwin-rebuild switch --flake "$DIR#mac"
+if REBUILD="$(command -v darwin-rebuild)"; then
+  exec sudo "$REBUILD" switch --flake "$DIR#mac"
+elif [[ -x /run/current-system/sw/bin/darwin-rebuild ]]; then
+  exec sudo /run/current-system/sw/bin/darwin-rebuild switch --flake "$DIR#mac"
+else
+  # Bootstrap nix-darwin on the first rebuild, matching flake.nix's release.
+  NIX="$(command -v nix)"
+  exec sudo "$NIX" run github:nix-darwin/nix-darwin/nix-darwin-26.05#darwin-rebuild -- switch --flake "$DIR#mac"
+fi
