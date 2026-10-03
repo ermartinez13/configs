@@ -2,6 +2,10 @@
 
 let
   configs = "${config.home.homeDirectory}/configs";
+  browserExtensions = [
+    "nngceckbapebfimnlniiiahkandclblb"  # Bitwarden
+    "fmkadmapgofadopljbjfkapdkoienihi"  # React Developer Tools
+  ];
 in
 
 {
@@ -49,6 +53,19 @@ in
       };
       cmd_duration.format = "[$duration]($style) ";
     };
+  };
+
+  # Browsers come from Homebrew (package = null); this only installs extensions
+  # from the Chrome Web Store on next launch.
+  programs.brave = {
+    enable = true;
+    package = null;
+    extensions = browserExtensions;
+  };
+  programs.google-chrome = {
+    enable = true;
+    package = null;
+    extensions = browserExtensions;
   };
 
   # Edit-in-place: the real file stays in my repo, ~/.config just points at it.
