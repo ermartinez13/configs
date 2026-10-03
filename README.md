@@ -1,32 +1,43 @@
 # CONFIGS
 
-Personal configuration files, tracked here and symlinked into place on the host.
+My Mac setup, managed with nix-darwin and Home Manager. One repo, one command: a fresh Mac ends up configured the same way every time.
 
-## Layout
-
-- `home/` — mirrors the structure of the actual home directory (`~`). Everything under it is meant to be **symlinked** from this repo into the corresponding path in `~`, not copied.
-  - `home/.zshrc` → `~/.zshrc`
-  - `home/.config/nvim/` → `~/.config/nvim`
-  - `home/.config/wezterm/` → `~/.config/wezterm`
-  - `home/.config/herdr/` → `~/.config/herdr`
-  - `home/.config/karabiner.edn` → `~/.config/karabiner.edn`
-- `accessories/` — device configs that are imported through their own apps rather than symlinked (`keychron-keymap.json`, `keychron-macros.json`).
-
-## Symlinking
-
-Because these are symlinks, edits made in `~` and edits made in this repo are the same file — commit from here as usual.
+## Apply
 
 ```shell
-ln -s ~/repos/configs/home/.zshrc ~/.zshrc
-ln -s ~/repos/configs/home/.config/nvim ~/.config/nvim
-ln -s ~/repos/configs/home/.config/wezterm ~/.config/wezterm
-ln -s ~/repos/configs/home/.config/herdr ~/.config/herdr
-ln -s ~/repos/configs/home/.config/karabiner.edn ~/.config/karabiner.edn
+./rebuild-nix.sh
 ```
 
-Use `ln -sfn` to replace an existing link, and move any real file out of the way first.
+The script links this repo to `~/configs`, then runs `darwin-rebuild switch --flake .#mac`. On a fresh machine (Determinate Nix installed, nothing else) it bootstraps nix-darwin first. It refuses to run if `~/configs` already exists and isn't this repo.
 
-## Karabiner
+## Rules
 
-Prerequisites:
-> Make sure you have a profile named "Default" in Karabiner's GUI tool. --[goku](https://github.com/yqrashawn/GokuRakuJoudo)
+- **Declared or it doesn't exist.** Homebrew runs with `cleanup = "zap"`, so anything not listed in `configuration.nix` is uninstalled on rebuild. Never `brew install` ad-hoc, and don't soften `zap`.
+- **Configs are live.** Files under `home/` are symlinked into `~` with `mkOutOfStoreSymlink`, so edits take effect without a rebuild. Rebuild only after changing a `.nix` file.
+- **Track what I author, not runtime state.** If a tool writes state into its config dir, link only the config file (e.g. `herdr/config.toml`, not `~/.config/herdr`). No credentials, auth or session data in this repo.
+- **Pin versions.** Commit `flake.lock` when a rebuild changes it, and `lazy-lock.json` after Neovim plugin updates.
+- **Agent autonomy goes through a reviewer.** Use the `claude-auto` / `codex-auto` aliases, not modes that skip permission checks.
+
+## Where things go
+
+| Change | File |
+| --- | --- |
+| CLI tool from nixpkgs | `home.packages` in `home.nix` |
+| GUI app, or tool only on Homebrew/a tap | `homebrew.casks` / `brews` / `taps` in `configuration.nix` |
+| macOS preference | `system.defaults` in `configuration.nix` |
+| Shell (zsh, aliases, prompt) | `programs.zsh` / `programs.starship` in `home.nix` |
+| Authored dotfile | `home/<path in ~>`, plus a `home.file` link in `home.nix` |
+| Agent instructions (Claude, Codex, opencode) | `home/AGENTS.md` (one file, linked to all three) |
+| Device config imported via its own app | `accessories/` (Keychron keymap/macros) |
+
+## Machine identity
+
+- Username: the single `user = "main"` line in `flake.nix`. Everything else is threaded from it.
+- Host label `mac`: must match in `flake.nix` (`darwinConfigurations."mac"`) and `rebuild-nix.sh` (`#mac`).
+- CPU: `nixpkgs.hostPlatform` in `configuration.nix` (`aarch64-darwin`, or `x86_64-darwin` for Intel).
+- Determinate Nix owns the Nix daemon, so `nix.enable = false` stays.
+- Git identity is not declared. Set it with `git config --global` per machine.
+
+## Reference
+
+Based on [kunchenguid/dotfiles](https://github.com/kunchenguid/dotfiles).
