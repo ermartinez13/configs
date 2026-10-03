@@ -18,6 +18,7 @@ in
     rclone    # sync files with cloud storage
     lazygit
     neovim
+    goku      # compiles karabiner.edn into Karabiner's config
     # the font everything renders in
     nerd-fonts.hack
   ];
@@ -58,6 +59,8 @@ in
   # Only the config file: herdr writes session state into ~/.config/herdr.
   home.file.".config/herdr/config.toml".source =
     config.lib.file.mkOutOfStoreSymlink "${configs}/home/.config/herdr/config.toml";
+  home.file.".config/karabiner.edn".source =
+    config.lib.file.mkOutOfStoreSymlink "${configs}/home/.config/karabiner.edn";
 
   home.file.".claude/CLAUDE.md".source =
     config.lib.file.mkOutOfStoreSymlink "${configs}/home/AGENTS.md";
