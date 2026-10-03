@@ -55,8 +55,9 @@ in
     config.lib.file.mkOutOfStoreSymlink "${configs}/home/.config/wezterm";
   home.file.".config/nvim".source =
     config.lib.file.mkOutOfStoreSymlink "${configs}/home/.config/nvim";
-  home.file.".config/herdr".source =
-    config.lib.file.mkOutOfStoreSymlink "${configs}/home/.config/herdr";
+  # Only the config file: herdr writes session state into ~/.config/herdr.
+  home.file.".config/herdr/config.toml".source =
+    config.lib.file.mkOutOfStoreSymlink "${configs}/home/.config/herdr/config.toml";
 
   home.file.".claude/CLAUDE.md".source =
     config.lib.file.mkOutOfStoreSymlink "${configs}/home/AGENTS.md";
