@@ -1,5 +1,11 @@
 { user, ... }:
 
+let
+  mouseSpeed = 1.5;  # 75% toward fast on the System Settings slider
+  # The live mouse driver takes speed as a whole number where 65536 means 1.0,
+  # so a speed of 1.5 is sent as 1.5 * 65536 = 98304.
+  mouseSpeedForDriver = builtins.floor (mouseSpeed * 65536);
+in
 {
   # Determinate already manages the Nix daemon, so nix-darwin shouldn't.
   nix.enable = false;
@@ -28,7 +34,12 @@
     finder.FXPreferredViewStyle = "Nlsv";  # list view by default
     finder.CreateDesktop = false;          # clean desktop
     trackpad.Clicking = true;              # tap to click
+    ".GlobalPreferences"."com.apple.mouse.scaling" = mouseSpeed;
   };
+  # The pref above is only read at login; also push the speed to the live mouse.
+  system.activationScripts.postActivation.text = ''
+    /usr/bin/hidutil property --set '{"HIDMouseAcceleration":${toString mouseSpeedForDriver}}' >/dev/null
+  '';
   nix-homebrew = {
     enable = true;
     inherit user;
