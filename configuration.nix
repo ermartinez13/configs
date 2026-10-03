@@ -21,6 +21,10 @@
       AppleShowAllExtensions = true;
     };
     dock.autohide = true;
+    dock.persistent-apps = [];             # no pinned apps (Finder and Trash always stay)
+    dock.show-recents = false;             # no "recent apps" section
+    WindowManager.StandardHideWidgets = true;      # no widgets on desktop
+    WindowManager.StageManagerHideWidgets = true;  # ...or in Stage Manager
     finder.FXPreferredViewStyle = "Nlsv";  # list view by default
     finder.CreateDesktop = false;          # clean desktop
     trackpad.Clicking = true;              # tap to click
