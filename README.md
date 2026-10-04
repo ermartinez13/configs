@@ -10,6 +10,8 @@ My Mac setup, managed with nix-darwin and Home Manager. One repo, one command: a
 
 The script links this repo to `~/configs`, then runs `darwin-rebuild switch --flake .#mac`. On a fresh machine (Determinate Nix installed, nothing else) it bootstraps nix-darwin first. It refuses to run if `~/configs` already exists and isn't this repo.
 
+On a fresh Mac, run `./init-nix.sh` instead: it installs Determinate Nix, then runs `./rebuild-nix.sh`. It does nothing if Nix is already installed.
+
 ## Rules
 
 - **Declared or it doesn't exist.** Homebrew runs with `cleanup = "zap"`, so anything not listed in `configuration.nix` is uninstalled on rebuild. Never `brew install` ad-hoc, and don't soften `zap`.
@@ -33,7 +35,7 @@ The script links this repo to `~/configs`, then runs `darwin-rebuild switch --fl
 
 ## Installed manually (not in Nix)
 
-- **Karabiner-Elements 15.0.0.** Do not upgrade past it. The Homebrew cask and nixpkgs both ship newer versions, so don't add it to either. Set up a profile named "Default" so goku can write to it.
+- **Karabiner-Elements 15.0.0.** Do not upgrade past it. The Homebrew cask and nixpkgs both ship newer versions, so don't add it to either. Install it with `./install-karabiner.sh` (downloads and checksums 15.0.0, then runs its installer). Set up a profile named "Default" so goku can write to it.
 - **Spokenly model** (Distil-Whisper Large 3.5, English only) and offline mode: set them up in the app.
 - **Contexts** (licensed): download it from contexts.co. The Homebrew cask fails because the vendor's download server has an expired SSL certificate.
 
