@@ -21,6 +21,9 @@
       # The one username line to change if this isn't your machine.
       # bootstrap.sh offers to rewrite this for you if your macOS username differs.
       user = "main";
+      # Where each machine links this repo (relative to ~). Must match that machine's rebuild script.
+      macConfigsLink = "configs";
+      piConfigsLink = "nix-configs";
     in
     {
       darwinConfigurations."mac" = nix-darwin.lib.darwinSystem {
@@ -32,7 +35,7 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = { inherit user; };
+            home-manager.extraSpecialArgs = { inherit user; configsLink = macConfigsLink; };
             home-manager.users.${user} = import ./home.nix;
           }
         ];
@@ -41,7 +44,7 @@
       # Raspberry Pi (Ubuntu Server): user environment only, applied by rpi/rebuild.sh.
       homeConfigurations."pi" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs-linux.legacyPackages.aarch64-linux;
-        extraSpecialArgs = { inherit user; };
+        extraSpecialArgs = { inherit user; configsLink = piConfigsLink; };
         modules = [ ./rpi/home.nix ];
       };
     };
