@@ -1,4 +1,4 @@
-{ config, pkgs, user, ... }:
+{ config, pkgs, ... }:
 
 let
   configs = "${config.home.homeDirectory}/configs";
@@ -9,51 +9,16 @@ let
 in
 
 {
-  home.username = user;
-  home.homeDirectory = "/Users/${user}";
-  home.stateVersion = "24.11";
+  # CLI tools, shell, prompt and shared dotfiles live in shared/home.nix;
+  # this file only adds what's Mac-specific.
+  imports = [ ./shared/home.nix ];
+
   home.packages = with pkgs; [
-    # cli i use constantly
-    ripgrep   # fast search
-    fd        # fast find
-    fzf       # fuzzy finder
-    jq        # json on the command line
-    gh        # GitHub CLI
-    rclone    # sync files with cloud storage
-    lazygit
-    neovim
     goku      # compiles karabiner.edn into Karabiner's config
     # the font everything renders in
     nerd-fonts.hack
   ];
   fonts.fontconfig.enable = true;
-  home.sessionVariables.EDITOR = "nvim";
-
-  programs.zsh = {
-    enable = true;
-    autosuggestion.enable = true;      # ghost text from history
-    syntaxHighlighting.enable = true;  # commands turn green when valid
-    initContent = ''
-      bindkey '^f' autosuggest-accept
-    '';
-    shellAliases = {
-      "claude-auto" = "claude --permission-mode auto";
-      "codex-auto" = "codex -c approvals_reviewer=auto_review";
-    };
-  };
-
-  programs.starship = {
-    enable = true;
-    settings = {
-      add_newline = false;
-      format = "$directory$git_branch$git_status$cmd_duration$line_break$character";
-      character = {
-        success_symbol = "[❯](purple)";
-        error_symbol = "[❯](red)";
-      };
-      cmd_duration.format = "[$duration]($style) ";
-    };
-  };
 
   # Browsers come from Homebrew (package = null); this only installs extensions
   # from the Chrome Web Store on next launch.
@@ -71,18 +36,6 @@ in
   # Edit-in-place: the real file stays in my repo, ~/.config just points at it.
   home.file.".config/wezterm".source =
     config.lib.file.mkOutOfStoreSymlink "${configs}/home/.config/wezterm";
-  home.file.".config/nvim".source =
-    config.lib.file.mkOutOfStoreSymlink "${configs}/home/.config/nvim";
-  # Only the config file: herdr writes session state into ~/.config/herdr.
-  home.file.".config/herdr/config.toml".source =
-    config.lib.file.mkOutOfStoreSymlink "${configs}/home/.config/herdr/config.toml";
   home.file.".config/karabiner.edn".source =
     config.lib.file.mkOutOfStoreSymlink "${configs}/home/.config/karabiner.edn";
-
-  home.file.".claude/CLAUDE.md".source =
-    config.lib.file.mkOutOfStoreSymlink "${configs}/home/AGENTS.md";
-  home.file.".codex/AGENTS.md".source =
-    config.lib.file.mkOutOfStoreSymlink "${configs}/home/AGENTS.md";
-  home.file.".config/opencode/AGENTS.md".source =
-    config.lib.file.mkOutOfStoreSymlink "${configs}/home/AGENTS.md";
 }

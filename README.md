@@ -24,14 +24,24 @@ On a fresh Mac, run `./init-nix.sh` instead: it installs Determinate Nix, then r
 
 | Change | File |
 | --- | --- |
-| CLI tool from nixpkgs | `home.packages` in `home.nix` |
+| CLI tool from nixpkgs | `home.packages` in `shared/home.nix` (every machine) or `home.nix` (Mac only) |
 | GUI app, or tool only on Homebrew/a tap | `homebrew.casks` / `brews` / `taps` in `configuration.nix` |
 | macOS preference | `system.defaults` in `configuration.nix` |
-| Shell (zsh, aliases, prompt) | `programs.zsh` / `programs.starship` in `home.nix` |
-| Authored dotfile | `home/<path in ~>`, plus a `home.file` link in `home.nix` |
+| Shell (zsh, aliases, prompt) | `programs.zsh` / `programs.starship` in `shared/home.nix` |
+| Authored dotfile | `home/<path in ~>`, plus a `home.file` link in `shared/home.nix` (every machine) or `home.nix` (Mac only) |
 | Agent instructions (Claude, Codex, opencode) | `home/AGENTS.md` (one file, linked to all three) |
+| Pi-only tool, service or agent harness | `rpi/home.nix` |
 | Browser extension (Brave/Chrome) | `programs.brave` / `programs.google-chrome` `extensions` in `home.nix` |
 | Device config imported via its own app | `accessories/` (Keychron keymap/macros) |
+
+## Raspberry Pi
+
+The Pi (Ubuntu Server 24.04, headless, user `main`) gets the shared user environment from `shared/home.nix` plus `rpi/home.nix`, through standalone Home Manager. Ubuntu keeps managing the OS.
+
+- **Fresh Pi:** clone this repo, then run `./rpi/init-nix.sh`. It installs Determinate Nix, applies the config, makes zsh the login shell and enables lingering so the weekly Nix cleanup runs without an SSH session. It does nothing if Nix is already installed.
+- **After changing a `.nix` file:** `./rpi/rebuild.sh` (the `homeConfigurations."pi"` output in `flake.nix`).
+- **Agent harnesses aren't pinned.** Claude Code, Codex, opencode, omp and herdr are installed from their vendors' installers on every rebuild, so a rebuild also updates them to the latest release. herdr is the session multiplexer; tmux is there as a backup.
+- Sign in to Claude, Codex and `gh` on the Pi itself. Credentials aren't shared between machines.
 
 ## Installed manually (not in Nix)
 
