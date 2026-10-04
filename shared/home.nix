@@ -1,9 +1,9 @@
 # User environment shared by every machine: the Mac (../home.nix) and
 # headless companions like the Pi (../rpi/home.nix).
-{ config, pkgs, user, ... }:
+{ config, pkgs, user, configsLink, ... }:
 
 let
-  configs = "${config.home.homeDirectory}/configs";
+  configs = "${config.home.homeDirectory}/${configsLink}";
 in
 
 {

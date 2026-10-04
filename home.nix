@@ -1,7 +1,7 @@
-{ config, pkgs, ... }:
+{ config, pkgs, configsLink, ... }:
 
 let
-  configs = "${config.home.homeDirectory}/configs";
+  configs = "${config.home.homeDirectory}/${configsLink}";
   browserExtensions = [
     "nngceckbapebfimnlniiiahkandclblb"  # Bitwarden
     "fmkadmapgofadopljbjfkapdkoienihi"  # React Developer Tools

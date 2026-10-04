@@ -39,6 +39,7 @@ On a fresh Mac, run `./init-nix.sh` instead: it installs Determinate Nix, then r
 The Pi (Ubuntu Server 24.04, headless, user `main`) gets the shared user environment from `shared/home.nix` plus `rpi/home.nix`, through standalone Home Manager. Ubuntu keeps managing the OS.
 
 - **Fresh Pi:** clone this repo, then run `./rpi/init-nix.sh`. It installs Determinate Nix, applies the config, makes zsh the login shell and enables lingering so the weekly Nix cleanup runs without an SSH session. It does nothing if Nix is already installed.
+- **Repo link:** the Pi links this repo to `~/nix-configs`, not `~/configs`, so it never collides with an existing `~/configs` folder.
 - **After changing a `.nix` file:** `./rpi/rebuild.sh` (the `homeConfigurations."pi"` output in `flake.nix`).
 - **Agent harnesses aren't pinned.** Claude Code, Codex, opencode, omp and herdr are installed from their vendors' installers on every rebuild, so a rebuild also updates them to the latest release. herdr is the session multiplexer; tmux is there as a backup.
 - Sign in to Claude, Codex and `gh` on the Pi itself. Credentials aren't shared between machines.
@@ -52,6 +53,7 @@ The Pi (Ubuntu Server 24.04, headless, user `main`) gets the shared user environ
 ## Machine identity
 
 - Username: the single `user = "main"` line in `flake.nix`. Everything else is threaded from it.
+- Repo link: `macConfigsLink` / `piConfigsLink` in `flake.nix` must match `CONFIGS` in `rebuild-nix.sh` / `rpi/rebuild.sh`.
 - Host label `mac`: must match in `flake.nix` (`darwinConfigurations."mac"`) and `rebuild-nix.sh` (`#mac`).
 - CPU: `nixpkgs.hostPlatform` in `configuration.nix` (`aarch64-darwin`, or `x86_64-darwin` for Intel).
 - Determinate Nix owns the Nix daemon, so `nix.enable = false` stays.
