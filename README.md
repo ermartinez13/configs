@@ -48,6 +48,12 @@ The Pi (Ubuntu Server 24.04, headless, user `main`) gets the shared user environ
 
 Both machines get Node.js 24 (including npm) and fnm through Nix. After rebuilding, open a new terminal or SSH session. Use `fnm install 22` and `fnm use 22` to switch versions, or `fnm use system` to return to the Nix baseline. Zsh selects installed project versions when entering a directory with `.node-version` or `.nvmrc`.
 
+## Docker Sandboxes
+
+The Mac declares Docker's `docker/tap/sbx` Homebrew cask, including its trust setting, alongside Docker Desktop. Apply with `./rebuild-nix.sh`, then run `sbx login` as your user. Docker Sandboxes uses the standalone `sbx` command.
+
+The Pi installs it from Docker's Ubuntu apt repo, not Nix: run `./rpi/install-sbx.sh` once (re-run to upgrade). It adds Docker's apt source if missing, installs `docker-sbx` without recommends and adds you to the `kvm` group. Reconnect over SSH afterwards, then `sbx login`. 
+
 ## Installed manually (not in Nix)
 
 - **Karabiner-Elements 15.0.0.** Do not upgrade past it. The Homebrew cask and nixpkgs both ship newer versions, so don't add it to either. Install it with `./install-karabiner.sh` (downloads and checksums 15.0.0, then runs its installer). Set up a profile named "Default" so goku can write to it.
