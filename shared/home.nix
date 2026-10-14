@@ -20,6 +20,8 @@ in
     rclone    # sync files with cloud storage
     lazygit
     neovim
+    nodejs_24 # Node/npm on fresh installs, before any fnm downloads
+    fnm       # switch Node versions per project
   ];
   home.sessionVariables.EDITOR = "nvim";
 
@@ -29,6 +31,15 @@ in
     syntaxHighlighting.enable = true;  # commands turn green when valid
     initContent = ''
       bindkey '^f' autosuggest-accept
+      # Select installed project versions from .node-version / .nvmrc on cd.
+      eval "$(fnm env --use-on-cd --shell zsh)"
+      # fnm changes a symlink; zsh may still cache the Nix node/npm paths.
+      fnm() {
+        local fnm_status=0
+        command fnm "$@" || fnm_status=$?
+        rehash
+        return "$fnm_status"
+      }
     '';
     shellAliases = {
       "claude-auto" = "claude --permission-mode auto";

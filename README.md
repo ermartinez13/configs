@@ -44,6 +44,10 @@ The Pi (Ubuntu Server 24.04, headless, user `main`) gets the shared user environ
 - **Agent harnesses aren't pinned.** Claude Code, Codex, opencode, omp and herdr are installed from their vendors' installers on every rebuild, so a rebuild also updates them to the latest release. herdr is the session multiplexer; tmux is there as a backup.
 - Sign in to Claude, Codex and `gh` on the Pi itself. Credentials aren't shared between machines.
 
+## Node.js
+
+Both machines get Node.js 24 (including npm) and fnm through Nix. After rebuilding, open a new terminal or SSH session. Use `fnm install 22` and `fnm use 22` to switch versions, or `fnm use system` to return to the Nix baseline. Zsh selects installed project versions when entering a directory with `.node-version` or `.nvmrc`.
+
 ## Installed manually (not in Nix)
 
 - **Karabiner-Elements 15.0.0.** Do not upgrade past it. The Homebrew cask and nixpkgs both ship newer versions, so don't add it to either. Install it with `./install-karabiner.sh` (downloads and checksums 15.0.0, then runs its installer). Set up a profile named "Default" so goku can write to it.
