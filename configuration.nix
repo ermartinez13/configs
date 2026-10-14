@@ -52,6 +52,7 @@ in
     taps = [
       "anomalyco/tap"
       "can1357/tap"
+      "docker/tap"
     ];
     brews = [
       "herdr"
@@ -69,6 +70,7 @@ in
       "betterdisplay"
       "nordvpn"
       "docker-desktop"
+      { name = "docker/tap/sbx"; trusted = true; } # standalone Docker Sandboxes
       "spokenly"
       "obsidian"
     ];
