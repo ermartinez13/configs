@@ -40,6 +40,7 @@ in
   system.activationScripts.postActivation.text = ''
     /usr/bin/hidutil property --set '{"HIDMouseAcceleration":${toString mouseSpeedForDriver}}' >/dev/null
   '';
+  environment.variables.HOMEBREW_NO_ANALYTICS = "1";  # brew in your shells
   nix-homebrew = {
     enable = true;
     inherit user;
@@ -49,6 +50,8 @@ in
     onActivation.cleanup = "zap";  # remove anything not listed here
     onActivation.autoUpdate = true;
     onActivation.extraFlags = [ "--force" ];
+    # Activation runs brew under sudo, so it doesn't see environment.variables.
+    onActivation.extraEnv.HOMEBREW_NO_ANALYTICS = "1";
     taps = [
       "anomalyco/tap"
       "can1357/tap"
