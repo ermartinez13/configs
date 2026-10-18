@@ -8,6 +8,12 @@
   targets.genericLinux.enable = true;  # Ubuntu, not NixOS
   programs.home-manager.enable = true; # provides the `home-manager` command
 
+  # Identify the Pi even when its hostname matches the Mac, including in herdr.
+  programs.starship.settings.character = {
+    success_symbol = lib.mkForce "[🍓 Pi ❯](bold green)";
+    error_symbol = lib.mkForce "[🍓 Pi ❯](bold red)";
+  };
+
   # Per-project dev environments: a repo's flake/shell.nix loads on `cd`.
   programs.direnv = {
     enable = true;
