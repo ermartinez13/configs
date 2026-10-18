@@ -1,4 +1,4 @@
-{ user, ... }:
+{ lib, user, ... }:
 
 let
   mouseSpeed = 1.5;  # 75% toward fast on the System Settings slider
@@ -25,6 +25,7 @@ in
       InitialKeyRepeat = 15;  # short delay before repeat
       _HIHideMenuBar = true;  # auto-hide the menu bar
       AppleShowAllExtensions = true;
+      "com.apple.mouse.tapBehavior" = 1; # tap to click, alongside trackpad.Clicking
     };
     dock.autohide = true;
     dock.persistent-apps = [];             # no pinned apps (Finder and Trash always stay)
@@ -36,8 +37,12 @@ in
     trackpad.Clicking = true;              # tap to click
     ".GlobalPreferences"."com.apple.mouse.scaling" = mouseSpeed;
   };
-  # The pref above is only read at login; also push the speed to the live mouse.
   system.activationScripts.postActivation.text = ''
+    # nix-darwin writes user defaults; also set the host-specific tap preference.
+    /bin/launchctl asuser "$(/usr/bin/id -u -- ${lib.escapeShellArg user})" \
+      /usr/bin/sudo --user=${lib.escapeShellArg user} -- \
+      /usr/bin/defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+    # The mouse speed preference is read at login; also update the live driver.
     /usr/bin/hidutil property --set '{"HIDMouseAcceleration":${toString mouseSpeedForDriver}}' >/dev/null
   '';
   environment.variables.HOMEBREW_NO_ANALYTICS = "1";  # brew in your shells
@@ -65,6 +70,8 @@ in
     casks = [
       "wezterm"
       "claude-code"
+      "claude"
+      "chatgpt"
       "codex"
       "brave-browser"
       "google-chrome"

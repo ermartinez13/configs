@@ -12,6 +12,10 @@ The script links this repo to `~/configs`, then runs `darwin-rebuild switch --fl
 
 On a fresh Mac, run `./init-nix.sh` instead: it installs Determinate Nix, then runs `./rebuild-nix.sh`. It does nothing if Nix is already installed.
 
+Tap to click is declared for both trackpad preference domains and the global user/host preferences. After rebuilding, log out and back in if tapping still does not click: the running trackpad driver can retain its previous setting.
+
+Claude Desktop and ChatGPT Desktop are installed automatically through the `claude` and `chatgpt` Homebrew casks in `configuration.nix`. Sign in to each app after installation. Claude Code is installed separately through `claude-code`.
+
 ## Rules
 
 - **Declared or it doesn't exist.** Homebrew runs with `cleanup = "zap"`, so anything not listed in `configuration.nix` is uninstalled on rebuild. Never `brew install` ad-hoc, and don't soften `zap`.
