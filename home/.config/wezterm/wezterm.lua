@@ -44,6 +44,11 @@ config.keys = {
   { key = "DownArrow", mods = "CMD|OPT", action = act.SendString("\x1b[1;11B") },
   { key = "RightArrow", mods = "CMD|OPT", action = act.SendString("\x1b[1;11C") },
   { key = "LeftArrow", mods = "CMD|OPT", action = act.SendString("\x1b[1;11D") },
+
+  -- Shift+Enter: WezTerm sends a bare CR by default, indistinguishable from
+  -- Enter, so Claude Code (behind Herdr, over SSH) can't insert a newline.
+  -- Send the CSI-u encoding so Herdr sees shift+enter and forwards it.
+  { key = "Enter", mods = "SHIFT", action = act.SendString("\x1b[13;2u") },
 }
 
 return config
