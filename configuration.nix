@@ -76,6 +76,7 @@ in
       "brave-browser"
       "google-chrome"
       "notion"
+      "slack"
       "visual-studio-code"
       "betterdisplay"
       "nordvpn"
