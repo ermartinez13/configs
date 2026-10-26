@@ -23,7 +23,6 @@ in
       AppleInterfaceStyle = "Dark";
       KeyRepeat = 2;          # fast key repeat
       InitialKeyRepeat = 15;  # short delay before repeat
-      _HIHideMenuBar = true;  # auto-hide the menu bar
       AppleShowAllExtensions = true;
       "com.apple.mouse.tapBehavior" = 1; # tap to click, alongside trackpad.Clicking
     };
@@ -33,7 +32,6 @@ in
     WindowManager.StandardHideWidgets = true;      # no widgets on desktop
     WindowManager.StageManagerHideWidgets = true;  # ...or in Stage Manager
     finder.FXPreferredViewStyle = "Nlsv";  # list view by default
-    finder.CreateDesktop = false;          # clean desktop
     trackpad.Clicking = true;              # tap to click
     ".GlobalPreferences"."com.apple.mouse.scaling" = mouseSpeed;
   };
