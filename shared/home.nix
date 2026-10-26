@@ -29,6 +29,7 @@ in
     enable = true;
     autosuggestion.enable = true;      # ghost text from history
     syntaxHighlighting.enable = true;  # commands turn green when valid
+    defaultKeymap = "emacs";           # Ctrl-A/E/K line editing, not vi mode
     initContent = ''
       bindkey '^f' autosuggest-accept
       # Select installed project versions from .node-version / .nvmrc on cd.
