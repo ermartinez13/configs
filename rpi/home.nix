@@ -31,10 +31,10 @@
   };
 
   # Agent harnesses aren't pinned: each rebuild runs the vendor installers,
-  # which fetch the latest release. Claude Code and opencode also self-update.
-  home.sessionPath = [ "$HOME/.local/bin" "$HOME/.opencode/bin" ];
+  # which fetch the latest release. Claude Code also self-updates.
+  home.sessionPath = [ "$HOME/.local/bin" ];
   home.activation.installHarnesses = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    export PATH="${lib.makeBinPath [ pkgs.curl pkgs.gnutar pkgs.gzip pkgs.unzip ]}:$HOME/.local/bin:$HOME/.opencode/bin:/usr/bin:/bin:$PATH"
+    export PATH="${lib.makeBinPath [ pkgs.curl pkgs.gnutar pkgs.gzip pkgs.unzip ]}:$HOME/.local/bin:/usr/bin:/bin:$PATH"
     harness() {
       local name=$1 script=$2
       noteEcho "Installing latest $name"
@@ -43,8 +43,6 @@
     }
     harness claude   'curl -fsSL https://claude.ai/install.sh | bash'
     harness codex    'curl -fsSL https://chatgpt.com/codex/install.sh | CODEX_NON_INTERACTIVE=1 sh'
-    harness opencode 'curl -fsSL https://opencode.ai/install | bash -s -- --no-modify-path'
-    harness omp      'curl -fsSL https://omp.sh/install | sh'
     harness herdr    'curl -fsSL https://herdr.dev/install.sh | sh'
   '';
 }

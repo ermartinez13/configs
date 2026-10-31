@@ -56,14 +56,12 @@ in
     # Activation runs brew under sudo, so it doesn't see environment.variables.
     onActivation.extraEnv.HOMEBREW_NO_ANALYTICS = "1";
     taps = [
-      "anomalyco/tap"
       "can1357/tap"
       "docker/tap"
     ];
     brews = [
       "herdr"
       "can1357/tap/omp"
-      "anomalyco/tap/opencode"
     ];
     casks = [
       "wezterm"
