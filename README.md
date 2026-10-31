@@ -16,6 +16,8 @@ Tap to click is declared for both trackpad preference domains and the global use
 
 Claude Desktop and ChatGPT Desktop are installed automatically through the `claude` and `chatgpt` Homebrew casks in `configuration.nix`. Sign in to each app after installation. Claude Code is installed separately through `claude-code`.
 
+**ChatGPT Mini/Pets shortcut:** After installation, clear the default **Option-Space** shortcut so Mini doesn't pop up when using that key combination. Open **Settings → Keyboard shortcuts → Show pet** and remove the binding. Mini and pets share these floating controls; see the [official Pets documentation](https://learn.chatgpt.com/docs/pets).
+
 ## Rules
 
 - **Declared or it doesn't exist.** Homebrew runs with `cleanup = "zap"`, so anything not listed in `configuration.nix` is uninstalled on rebuild. Never `brew install` ad-hoc, and don't soften `zap`.
