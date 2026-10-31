@@ -72,6 +72,4 @@ in
     config.lib.file.mkOutOfStoreSymlink "${configs}/home/AGENTS.md";
   home.file.".codex/AGENTS.md".source =
     config.lib.file.mkOutOfStoreSymlink "${configs}/home/AGENTS.md";
-  home.file.".config/opencode/AGENTS.md".source =
-    config.lib.file.mkOutOfStoreSymlink "${configs}/home/AGENTS.md";
 }

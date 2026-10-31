@@ -33,7 +33,7 @@ Claude Desktop and ChatGPT Desktop are installed automatically through the `clau
 | macOS preference | `system.defaults` in `configuration.nix` |
 | Shell (zsh, aliases, prompt) | `programs.zsh` / `programs.starship` in `shared/home.nix` |
 | Authored dotfile | `home/<path in ~>`, plus a `home.file` link in `shared/home.nix` (every machine) or `home.nix` (Mac only) |
-| Agent instructions (Claude, Codex, opencode) | `home/AGENTS.md` (one file, linked to all three) |
+| Agent instructions (Claude, Codex) | `home/AGENTS.md` (one file, linked to both on every machine) |
 | Pi-only tool, service or agent harness | `rpi/home.nix` |
 | Browser extension (Brave/Chrome) | `programs.brave` / `programs.google-chrome` `extensions` in `home.nix` |
 | Device config imported via its own app | `accessories/` (Keychron keymap/macros) |
@@ -46,7 +46,7 @@ The Pi (Ubuntu Server 24.04, headless, user `main`) gets the shared user environ
 - **Repo link:** the Pi links this repo to `~/nix-configs`, not `~/configs`, so it never collides with an existing `~/configs` folder.
 - **After changing a `.nix` file:** `./rpi/rebuild.sh` (the `homeConfigurations."pi"` output in `flake.nix`).
 - **Prompt identity:** the Pi uses a `🍓 Pi ❯` marker (green after success, red after an error), so SSH and herdr panes are recognizable even when both machines have the same hostname.
-- **Agent harnesses aren't pinned.** Claude Code, Codex, opencode, omp and herdr are installed from their vendors' installers on every rebuild, so a rebuild also updates them to the latest release. herdr is the session multiplexer; tmux is there as a backup.
+- **Agent harnesses aren't pinned.** Claude Code, Codex and herdr are installed from their vendors' installers on every rebuild, so a rebuild also updates them to the latest release. herdr is the session multiplexer; tmux is there as a backup.
 - Sign in to Claude, Codex and `gh` on the Pi itself. Credentials aren't shared between machines.
 
 ## Node.js

@@ -46,6 +46,6 @@ The following entries extend the original glossary, including its outstanding Ho
 | Node.js / npm | The JavaScript runtime and package manager provided by the Nix Node package. Node 24 is the baseline for fresh installs. |
 | fnm | The Node version manager used to install and select additional Node versions without rebuilding Nix. See [Node workflow](node.md). |
 | `.node-version` / `.nvmrc` | Project files declaring a desired Node version that fnm can read. An exact version is more repeatable than a moving major or LTS alias. |
-| Agent harness | A tool used to run a coding agent, such as the Claude Code, Codex, opencode and omp installations declared here. Their local sessions and authentication are separate from shared agent instructions. |
+| Agent harness | A tool used to run a coding agent, such as the Claude Code, Codex and omp installations declared here. Their local sessions and authentication are separate from shared agent instructions. |
 
 Tool roles above are visible in the [shared configuration](../shared/home.nix), [Mac configuration](../home.nix), [Pi configuration](../rpi/home.nix) and authored files under [home/](../home/).
