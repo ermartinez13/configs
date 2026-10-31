@@ -1,4 +1,4 @@
-{ lib, user, ... }:
+{ config, lib, user, ... }:
 
 let
   mouseSpeed = 1.5;  # 75% toward fast on the System Settings slider
@@ -42,6 +42,10 @@ in
       /usr/bin/defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
     # The mouse speed preference is read at login; also update the live driver.
     /usr/bin/hidutil property --set '{"HIDMouseAcceleration":${toString mouseSpeedForDriver}}' >/dev/null
+    # Naming the cask explicitly also upgrades self-updating apps.
+    /usr/bin/sudo --user=${lib.escapeShellArg user} --set-home \
+      /usr/bin/env HOMEBREW_NO_ANALYTICS=1 HOMEBREW_NO_AUTO_UPDATE=1 \
+      ${config.homebrew.prefix}/bin/brew upgrade --cask karabiner-elements
   '';
   environment.variables.HOMEBREW_NO_ANALYTICS = "1";  # brew in your shells
   nix-homebrew = {
@@ -64,6 +68,7 @@ in
       "can1357/tap/omp"
     ];
     casks = [
+      "karabiner-elements"
       "wezterm"
       "claude-code"
       "claude"

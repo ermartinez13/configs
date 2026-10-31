@@ -1,0 +1,5 @@
+# Karabiner writes backups, downloaded assets and machine state beside the config.
+# Only the native configuration and this ignore file belong in version control.
+*
+!.gitignore
+!karabiner.json

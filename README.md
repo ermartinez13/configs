@@ -22,7 +22,7 @@ Claude Desktop and ChatGPT Desktop are installed automatically through the `clau
 
 - **Declared or it doesn't exist.** Homebrew runs with `cleanup = "zap"`, so anything not listed in `configuration.nix` is uninstalled on rebuild. Never `brew install` ad-hoc, and don't soften `zap`.
 - **Configs are live.** Files under `home/` are symlinked into `~` with `mkOutOfStoreSymlink`, so edits take effect without a rebuild. Rebuild only after changing a `.nix` file.
-- **Track what I author, not runtime state.** If a tool writes state into its config dir, link only the config file (e.g. `herdr/config.toml`, not `~/.config/herdr`). No credentials, auth or session data in this repo.
+- **Track what I author, not runtime state.** If a tool writes state into its config dir, link only the config file (e.g. `herdr/config.toml`, not `~/.config/herdr`). Karabiner requires a directory symlink for change detection; its directory ignores everything except `karabiner.json` and `.gitignore`. No credentials, auth or session data in this repo.
 - **Pin versions.** Commit `flake.lock` when a rebuild changes it, and `lazy-lock.json` after Neovim plugin updates.
 - **Agent autonomy goes through a reviewer.** Use the `claude-auto` / `codex-auto` aliases, not modes that skip permission checks.
 
@@ -63,9 +63,14 @@ The Pi installs it from Docker's Ubuntu apt repo, not Nix: run `./rpi/install-sb
 
 ## Installed manually (not in Nix)
 
-- **Karabiner-Elements 15.0.0.** Do not upgrade past it. The Homebrew cask and nixpkgs both ship newer versions, so don't add it to either. Install it with `./install-karabiner.sh` (downloads and checksums 15.0.0, then runs its installer). Set up a profile named "Default" so goku can write to it.
 - **Spokenly model** (Distil-Whisper Large 3.5, English only) and offline mode: set them up in the app.
 - **Contexts** (licensed): download it from contexts.co. The Homebrew cask fails because the vendor's download server has an expired SSL certificate.
+
+## Karabiner
+
+Karabiner is installed through the unversioned `karabiner-elements` Homebrew cask. Each Mac rebuild upgrades Karabiner to the latest stable release available in Homebrew. To update between rebuilds, run `brew update` followed by `brew upgrade --cask karabiner-elements`.
+
+Edit [home/.config/karabiner/karabiner.json](home/.config/karabiner/karabiner.json) directly, or use Karabiner's settings and review the resulting Git diff. There is no compiler step. The native JSON preserves the existing ten rules, the Keychron V1 Max device override, and the ANSI virtual keyboard. See [setup and shortcuts](docs/karabiner.md).
 
 ## Machine identity
 

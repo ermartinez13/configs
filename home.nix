@@ -14,7 +14,6 @@ in
   imports = [ ./shared/home.nix ];
 
   home.packages = with pkgs; [
-    goku      # compiles karabiner.edn into Karabiner's config
     # the font everything renders in
     nerd-fonts.hack
   ];
@@ -36,6 +35,8 @@ in
   # Edit-in-place: the real file stays in my repo, ~/.config just points at it.
   home.file.".config/wezterm".source =
     config.lib.file.mkOutOfStoreSymlink "${configs}/home/.config/wezterm";
-  home.file.".config/karabiner.edn".source =
-    config.lib.file.mkOutOfStoreSymlink "${configs}/home/.config/karabiner.edn";
+  # Karabiner requires a directory symlink to watch atomic JSON replacements.
+  # Its runtime files are ignored by home/.config/karabiner/.gitignore.
+  home.file.".config/karabiner".source =
+    config.lib.file.mkOutOfStoreSymlink "${configs}/home/.config/karabiner";
 }

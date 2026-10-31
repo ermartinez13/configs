@@ -41,7 +41,7 @@ The following entries extend the original glossary, including its outstanding Ho
 | WezTerm | The Mac terminal emulator: it renders local terminals and SSH sessions and forwards selected Command shortcuts to herdr. |
 | herdr | The primary terminal/session multiplexer in this setup, with panes, workspaces and an agent panel. The Pi also installs tmux as a backup. |
 | Neovim | The default terminal editor (`EDITOR=nvim`), with Lua configuration and plugins managed through lazy.nvim. |
-| Karabiner-Elements / goku | Karabiner applies Mac keyboard remappings. goku compiles the repo's `karabiner.edn` into Karabiner configuration. The Karabiner installer is separately pinned to 15.0.0. |
+| Karabiner-Elements | Applies Mac keyboard remappings from the repo's native `home/.config/karabiner/karabiner.json`. The Homebrew cask follows current releases and updates on Mac rebuilds. No separate compiler is used. |
 | Hyper key | The combined Control/Option/Command/Shift modifier produced by holding Caps Lock here. It gives navigation shortcuts a common prefix. |
 | Node.js / npm | The JavaScript runtime and package manager provided by the Nix Node package. Node 24 is the baseline for fresh installs. |
 | fnm | The Node version manager used to install and select additional Node versions without rebuilding Nix. See [Node workflow](node.md). |
