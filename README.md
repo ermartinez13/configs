@@ -61,6 +61,17 @@ The Mac declares Docker's `docker/tap/sbx` Homebrew cask, including its trust se
 
 The Pi installs it from Docker's Ubuntu apt repo, not Nix: run `./rpi/install-sbx.sh` once (re-run to upgrade). It adds Docker's apt source if missing, installs `docker-sbx` without recommends and adds you to the `kvm` group. Reconnect over SSH afterwards, then `sbx login`. 
 
+### Copying from an sbx pane in herdr
+
+With WezTerm → herdr → sbx, ordinary drag-to-copy can stop working while copying from a regular shell pane still works. Mouse reporting from an application inside the pane can cause herdr to forward drags to that application instead of selecting text.
+
+Two workarounds were verified with herdr 0.9.5, WezTerm 20240203-110809-5046fc22, and sbx v0.51.0:
+
+- **WezTerm selection:** hold **Shift** while dragging over the text, then press **Cmd+C**. This uses WezTerm's selection and can span herdr pane boundaries.
+- **Herdr copy mode:** focus the sbx pane, press **Ctrl+B**, then **[**. Move with the arrow keys, press **Space** to start selecting, move to extend the selection, then press **y** to copy.
+
+Neither workaround requires a configuration change. A `Broken pipe (os error 32)` was also observed; its cause has not been confirmed.
+
 ## Installed manually (not in Nix)
 
 - **Spokenly model** (Distil-Whisper Large 3.5, English only) and offline mode: set them up in the app.
