@@ -19,7 +19,7 @@
   outputs = inputs@{ self, nix-darwin, nix-homebrew, home-manager, nixpkgs, nixpkgs-linux }:
     let
       # The one username line to change if this isn't your machine.
-      # bootstrap.sh offers to rewrite this for you if your macOS username differs.
+      # Set this to the existing account name before running either init script.
       user = "main";
       # Where each machine links this repo (relative to ~). Must match that machine's rebuild script.
       macConfigsLink = "configs";

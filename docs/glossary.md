@@ -11,7 +11,7 @@ In this repo, Determinate provides Nix on both machines, nix-darwin manages the 
 
 ## Configuration and reproducibility
 
-The following entries extend the original glossary, including its outstanding Home Manager item. Their roles are grounded in [flake.nix](../flake.nix), [configuration.nix](../configuration.nix), [shared/home.nix](../shared/home.nix) and [rpi/home.nix](../rpi/home.nix).
+These roles are grounded in [flake.nix](../flake.nix), [configuration.nix](../configuration.nix), [shared/home.nix](../shared/home.nix) and [rpi/home.nix](../rpi/home.nix). See [Philosophy](philosophy.md) for the design choices and [Maintenance](maintenance.md) for where changes belong.
 
 | Term | Meaning and role here |
 | --- | --- |

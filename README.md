@@ -1,107 +1,69 @@
 # CONFIGS
 
-My Mac setup, managed with nix-darwin and Home Manager. One repo, one command: a fresh Mac ends up configured the same way every time.
+My Mac and Raspberry Pi environment, managed with Nix and Home Manager. Run these commands from the repository directory.
 
-## Apply
+## Fresh Mac
 
-### Fresh Mac: install and configure
+Use an Apple Silicon Mac with the account name `main` (or change `user` in `flake.nix`). Install Apple's Command Line Tools if Git is unavailable, then clone this repo:
 
-```shell
+```sh
+xcode-select --install  # if the Command Line Tools are not already installed
+```
+
+After the installation finishes:
+
+```sh
+git clone https://github.com/ermartinez13/configs.git
+cd configs
 ./init-nix.sh
 ```
 
-**No manual Determinate Nix installation is needed.** This script installs Determinate Nix, then runs `./rebuild-nix.sh` to configure the Mac. It does nothing if Nix is already installed; use the rebuild command below in that case.
+**No manual Determinate Nix installation is needed.** The script installs it and runs the Mac rebuild. If Nix is already installed, the init script does nothing; run the rebuild below instead.
 
-### Regular rebuild: apply configuration changes
+Finish the [manual Mac setup](docs/mac-setup.md) for app permissions, sign-ins and peripherals.
 
-```shell
+## Mac rebuild
+
+After changing a `.nix` file:
+
+```sh
 ./rebuild-nix.sh
 ```
 
-Run this after changing a `.nix` file or when Nix is already installed. The script links this repo to `~/configs`, then runs `darwin-rebuild switch --flake .#mac`. It bootstraps nix-darwin if needed and refuses to run if `~/configs` already exists and isn't this repo.
+This also bootstraps nix-darwin if Nix is installed but nix-darwin is not. Editing linked dotfiles under `home/` needs no Nix rebuild.
 
-### After setup or rebuilding
+## Fresh Pi
 
-Tap to click is declared for both trackpad preference domains and the global user/host preferences. After rebuilding, log out and back in if tapping still does not click: the running trackpad driver can retain its previous setting.
+Start with Ubuntu Server on an ARM64 Pi, an account named `main` (or adjust `flake.nix`), Git, curl, sudo access and a working SSH connection. On the Pi:
 
-Claude Desktop and ChatGPT Desktop are installed automatically through the `claude` and `chatgpt` Homebrew casks in `configuration.nix`. Sign in to each app after installation. Claude Code is installed separately through `claude-code`.
+```sh
+git clone https://github.com/ermartinez13/configs.git
+cd configs
+./rpi/init-nix.sh
+```
 
-**ChatGPT Mini/Pets shortcut:** After installation, clear the default **Option-Space** shortcut so Mini doesn't pop up when using that key combination. Open **Settings → Keyboard shortcuts → Show pet** and remove the binding. Mini and pets share these floating controls; see the [official Pets documentation](https://learn.chatgpt.com/docs/pets).
+This installs Determinate Nix, applies Home Manager, sets zsh as the login shell and enables lingering for user services. Reconnect over SSH afterwards. If Nix is already installed, the init script does nothing; use the Pi rebuild below. See [Pi setup](docs/pi-setup.md) for existing-Nix setup, sign-ins and cleanup, and [SSH access](docs/ssh.md) for restoring Mac access.
 
-## Rules
+## Pi rebuild
 
-- **Declared or it doesn't exist.** Homebrew runs with `cleanup = "zap"`, so anything not listed in `configuration.nix` is uninstalled on rebuild. Never `brew install` ad-hoc, and don't soften `zap`.
-- **Configs are live.** Files under `home/` are symlinked into `~` with `mkOutOfStoreSymlink`, so edits take effect without a rebuild. Rebuild only after changing a `.nix` file.
-- **Track what I author, not runtime state.** If a tool writes state into its config dir, link only the config file (e.g. `herdr/config.toml`, not `~/.config/herdr`). Karabiner requires a directory symlink for change detection; its directory ignores everything except `karabiner.json` and `.gitignore`. No credentials, auth or session data in this repo.
-- **Pin versions.** Commit `flake.lock` when a rebuild changes it, and `lazy-lock.json` after Neovim plugin updates.
-- **Agent autonomy goes through a reviewer.** Use the `claude-auto` / `codex-auto` aliases, not modes that skip permission checks.
+On the Pi, from the repo directory:
 
-## Where things go
+```sh
+./rpi/rebuild.sh
+```
 
-| Change | File |
-| --- | --- |
-| CLI tool from nixpkgs | `home.packages` in `shared/home.nix` (every machine) or `home.nix` (Mac only) |
-| GUI app, or tool only on Homebrew/a tap | `homebrew.casks` / `brews` / `taps` in `configuration.nix` |
-| macOS preference | `system.defaults` in `configuration.nix` |
-| Shell (zsh, aliases, prompt) | `programs.zsh` / `programs.starship` in `shared/home.nix` |
-| Authored dotfile | `home/<path in ~>`, plus a `home.file` link in `shared/home.nix` (every machine) or `home.nix` (Mac only) |
-| Agent instructions (Claude, Codex) | `home/AGENTS.md` (one file, linked to both on every machine) |
-| Pi-only tool, service or agent harness | `rpi/home.nix` |
-| Browser extension (Brave/Chrome) | `programs.brave` / `programs.google-chrome` `extensions` in `home.nix` |
-| Device config imported via its own app | `accessories/` (Keychron keymap/macros) |
+For Docker Sandboxes, follow the separate [Mac/Pi installation and copying guide](docs/docker-sandboxes.md).
 
-## Raspberry Pi
+## Documentation
 
-The Pi (Ubuntu Server 24.04, headless, user `main`) gets the shared user environment from `shared/home.nix` plus `rpi/home.nix`, through standalone Home Manager. Ubuntu keeps managing the OS.
-
-- **Fresh Pi:** clone this repo, then run `./rpi/init-nix.sh`. It installs Determinate Nix, applies the config, makes zsh the login shell and enables lingering so the weekly Nix cleanup runs without an SSH session. It does nothing if Nix is already installed.
-- **Repo link:** the Pi links this repo to `~/nix-configs`, not `~/configs`, so it never collides with an existing `~/configs` folder.
-- **After changing a `.nix` file:** `./rpi/rebuild.sh` (the `homeConfigurations."pi"` output in `flake.nix`).
-- **Prompt identity:** the Pi uses a `🍓 Pi ❯` marker (green after success, red after an error), so SSH and herdr panes are recognizable even when both machines have the same hostname.
-- **Agent harnesses aren't pinned.** Claude Code, Codex and herdr are installed from their vendors' installers on every rebuild, so a rebuild also updates them to the latest release. herdr is the session multiplexer; tmux is there as a backup.
-- Sign in to Claude, Codex and `gh` on the Pi itself. Credentials aren't shared between machines.
-
-## Node.js
-
-Both machines get Node.js 24 (including npm) and fnm through Nix. After rebuilding, open a new terminal or SSH session. Use `fnm install 22` and `fnm use 22` to switch versions, or `fnm use system` to return to the Nix baseline. Zsh selects installed project versions when entering a directory with `.node-version` or `.nvmrc`.
-
-## Docker Sandboxes
-
-The Mac declares Docker's `docker/tap/sbx` Homebrew cask, including its trust setting, alongside Docker Desktop. Apply with `./rebuild-nix.sh`, then run `sbx login` as your user. Docker Sandboxes uses the standalone `sbx` command.
-
-The Pi installs it from Docker's Ubuntu apt repo, not Nix: run `./rpi/install-sbx.sh` once (re-run to upgrade). It adds Docker's apt source if missing, installs `docker-sbx` without recommends and adds you to the `kvm` group. Reconnect over SSH afterwards, then `sbx login`. 
-
-### Copying from an sbx pane in herdr
-
-With WezTerm → herdr → sbx, ordinary drag-to-copy can stop working while copying from a regular shell pane still works. Mouse reporting from an application inside the pane can cause herdr to forward drags to that application instead of selecting text.
-
-Two workarounds were verified with herdr 0.9.5, WezTerm 20240203-110809-5046fc22, and sbx v0.51.0:
-
-- **WezTerm selection:** hold **Shift** while dragging over the text, then press **Cmd+C**. This uses WezTerm's selection and can span herdr pane boundaries.
-- **Herdr copy mode:** focus the sbx pane, press **Ctrl+B**, then **[**. Move with the arrow keys, press **Space** to start selecting, move to extend the selection, then press **y** to copy.
-
-Neither workaround requires a configuration change. A `Broken pipe (os error 32)` was also observed; its cause has not been confirmed.
-
-## Installed manually (not in Nix)
-
-- **Spokenly model** (Distil-Whisper Large 3.5, English only) and offline mode: set them up in the app.
-- **Contexts** (licensed): download it from contexts.co. The Homebrew cask fails because the vendor's download server has an expired SSL certificate.
-
-## Karabiner
-
-Karabiner is installed through the unversioned `karabiner-elements` Homebrew cask. Each Mac rebuild upgrades Karabiner to the latest stable release available in Homebrew. To update between rebuilds, run `brew update` followed by `brew upgrade --cask karabiner-elements`.
-
-Edit [home/.config/karabiner/karabiner.json](home/.config/karabiner/karabiner.json) directly, or use Karabiner's settings and review the resulting Git diff. There is no compiler step. The native JSON preserves the existing ten rules, the Keychron V1 Max device override, and the ANSI virtual keyboard. See [setup and shortcuts](docs/karabiner.md).
-
-## Machine identity
-
-- Username: the single `user = "main"` line in `flake.nix`. Everything else is threaded from it.
-- Repo link: `macConfigsLink` / `piConfigsLink` in `flake.nix` must match `CONFIGS` in `rebuild-nix.sh` / `rpi/rebuild.sh`.
-- Host label `mac`: must match in `flake.nix` (`darwinConfigurations."mac"`) and `rebuild-nix.sh` (`#mac`).
-- CPU: `nixpkgs.hostPlatform` in `configuration.nix` (`aarch64-darwin`, or `x86_64-darwin` for Intel).
-- Determinate Nix owns the Nix daemon, so `nix.enable = false` stays.
-- Git identity is not declared. Set it with `git config --global` per machine.
-
-## Reference
+- [Philosophy](docs/philosophy.md): what belongs in the repo and the limits of reproducibility.
+- [Maintenance](docs/maintenance.md): where changes go, linking rules and machine identity.
+- [Mac setup](docs/mac-setup.md): manual steps after installation.
+- [Pi setup](docs/pi-setup.md): headless operation, authentication and garbage collection.
+- [SSH access](docs/ssh.md): keys and connecting from the Mac.
+- [Karabiner](docs/karabiner.md): permissions, device setup and shortcuts.
+- [Node.js](docs/node.md): the baseline runtime and per-project versions.
+- [Docker Sandboxes](docs/docker-sandboxes.md): installation and clipboard workarounds.
+- [Glossary](docs/glossary.md): the tools and terminology used here.
 
 Based on [kunchenguid/dotfiles](https://github.com/kunchenguid/dotfiles).
