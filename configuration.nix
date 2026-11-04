@@ -81,6 +81,7 @@ in
       "visual-studio-code"
       "betterdisplay"
       "nordvpn"
+      "proton-drive"
       "docker-desktop"
       { name = "docker/tap/sbx"; trusted = true; } # standalone Docker Sandboxes
       "spokenly"

@@ -11,6 +11,7 @@ Start with the [fresh Mac commands](../README.md#fresh-mac). `init-nix.sh` insta
 5. If tapping the trackpad still does not click after rebuilding, log out and back in. Tap-to-click is declared, but the running driver can retain the previous setting.
 6. Restore [SSH access to the Pi](ssh.md) and configure [Git identity](maintenance.md#machine-identity).
 7. If using Docker Sandboxes, complete its [sign-in step](docker-sandboxes.md).
+8. Open Proton Drive, sign in to your Proton account, complete any requested macOS permissions, and choose which files to keep available offline. Homebrew installs the app; authentication and sync preferences stay local to the Mac.
 
 ## Software with manual setup
 
