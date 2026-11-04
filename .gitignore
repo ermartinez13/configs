@@ -1,0 +1,19 @@
+# Local environment files; examples must contain placeholders only.
+.env
+.env.*
+!.env.example
+
+# Private keys and certificate bundles.
+*.key
+*.pem
+*.p12
+*.pfx
+id_rsa
+id_ed25519
+
+# Local credential files.
+credentials.json
+service-account*.json
+
+# iTerm runtime exports can contain settings and session state.
+*.itermexport
