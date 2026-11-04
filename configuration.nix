@@ -31,6 +31,8 @@ in
     dock.show-recents = false;             # no "recent apps" section
     WindowManager.StandardHideWidgets = true;      # no widgets on desktop
     WindowManager.StageManagerHideWidgets = true;  # ...or in Stage Manager
+    # "Only in Stage Manager": ordinary wallpaper clicks must not reveal widgets.
+    WindowManager.EnableStandardClickToShowDesktop = false;
     finder.FXPreferredViewStyle = "Nlsv";  # list view by default
     trackpad.Clicking = true;              # tap to click
     ".GlobalPreferences"."com.apple.mouse.scaling" = mouseSpeed;
