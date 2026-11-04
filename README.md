@@ -4,13 +4,23 @@ My Mac setup, managed with nix-darwin and Home Manager. One repo, one command: a
 
 ## Apply
 
+### Fresh Mac: install and configure
+
+```shell
+./init-nix.sh
+```
+
+**No manual Determinate Nix installation is needed.** This script installs Determinate Nix, then runs `./rebuild-nix.sh` to configure the Mac. It does nothing if Nix is already installed; use the rebuild command below in that case.
+
+### Regular rebuild: apply configuration changes
+
 ```shell
 ./rebuild-nix.sh
 ```
 
-The script links this repo to `~/configs`, then runs `darwin-rebuild switch --flake .#mac`. On a fresh machine (Determinate Nix installed, nothing else) it bootstraps nix-darwin first. It refuses to run if `~/configs` already exists and isn't this repo.
+Run this after changing a `.nix` file or when Nix is already installed. The script links this repo to `~/configs`, then runs `darwin-rebuild switch --flake .#mac`. It bootstraps nix-darwin if needed and refuses to run if `~/configs` already exists and isn't this repo.
 
-On a fresh Mac, run `./init-nix.sh` instead: it installs Determinate Nix, then runs `./rebuild-nix.sh`. It does nothing if Nix is already installed.
+### After setup or rebuilding
 
 Tap to click is declared for both trackpad preference domains and the global user/host preferences. After rebuilding, log out and back in if tapping still does not click: the running trackpad driver can retain its previous setting.
 
