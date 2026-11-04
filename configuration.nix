@@ -5,6 +5,7 @@ let
   # The live mouse driver takes speed as a whole number where 65536 means 1.0,
   # so a speed of 1.5 is sent as 1.5 * 65536 = 98304.
   mouseSpeedForDriver = builtins.floor (mouseSpeed * 65536);
+  builtInDisplayResolution = "1496x967"; # effective HiDPI size (larger text)
 in
 {
   # Determinate already manages the Nix daemon, so nix-darwin shouldn't.
@@ -48,6 +49,19 @@ in
     /usr/bin/sudo --user=${lib.escapeShellArg user} --set-home \
       /usr/bin/env HOMEBREW_NO_ANALYTICS=1 HOMEBREW_NO_AUTO_UPDATE=1 \
       ${config.homebrew.prefix}/bin/brew upgrade --cask karabiner-elements
+    # BetterDisplay's CLI talks to the running app in the user's GUI session.
+    # On first setup, open BetterDisplay and rebuild again to apply this setting.
+    if [[ -x /Applications/BetterDisplay.app/Contents/MacOS/BetterDisplay ]] \
+      && /usr/bin/pgrep -u "$(/usr/bin/id -u -- ${lib.escapeShellArg user})" -x BetterDisplay >/dev/null; then
+      /bin/launchctl asuser "$(/usr/bin/id -u -- ${lib.escapeShellArg user})" \
+        /usr/bin/sudo --user=${lib.escapeShellArg user} --set-home -- \
+        /Applications/BetterDisplay.app/Contents/MacOS/BetterDisplay \
+        set -name="Built-in Display" -resolution=${lib.escapeShellArg builtInDisplayResolution} \
+        -hiDPI=on -refreshRate=ProMotion \
+        || echo "Warning: couldn't set built-in display scaling; check BetterDisplay's available modes and CLI integration." >&2
+    else
+      echo "Skipping display scaling: open BetterDisplay, then rebuild to apply it." >&2
+    fi
   '';
   environment.variables.HOMEBREW_NO_ANALYTICS = "1";  # brew in your shells
   nix-homebrew = {

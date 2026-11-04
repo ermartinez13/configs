@@ -12,6 +12,20 @@ Start with the [fresh Mac commands](../README.md#fresh-mac). `init-nix.sh` insta
 6. Restore [SSH access to the Pi](ssh.md) and configure [Git identity](maintenance.md#machine-identity).
 7. If using Docker Sandboxes, complete its [sign-in step](docker-sandboxes.md).
 8. Open Proton Drive, sign in to your Proton account, complete any requested macOS permissions, and choose which files to keep available offline. Homebrew installs the app; authentication and sync preferences stay local to the Mac.
+9. Open BetterDisplay and complete its first-launch setup. Leave CLI integration enabled and run `./rebuild-nix.sh` again to apply the built-in display scaling described below.
+
+## Built-in display scaling
+
+The Mac rebuild uses the installed BetterDisplay app to select **1496 × 967 HiDPI with ProMotion** on **Built-in Display**. This is the effective "looks like" size, not the panel's physical resolution. The preferred size is set by `builtInDisplayResolution` in `configuration.nix`; external displays are not targeted.
+
+BetterDisplay must already be running in the user's graphical session. If it is not running, the rebuild skips this step with a message. An unsupported mode or failed CLI request produces a warning without failing the rebuild. On a different Mac, check the available modes before changing the preference:
+
+```sh
+/Applications/BetterDisplay.app/Contents/MacOS/BetterDisplay \
+  get -name="Built-in Display" -displayModeList
+```
+
+The activation command also requests ProMotion, so adjust that argument for displays without it. See the [BetterDisplay CLI reference](https://betterdisplay.pro/guide/integration/cli-reference/).
 
 ## Software with manual setup
 
