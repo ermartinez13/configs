@@ -2,6 +2,10 @@
 
 SSH keys and host configuration are local machine state, not files to commit to this public repo. These steps restore access after a Mac reset; the Pi must already have an SSH server, a reachable address and an account.
 
+## Before starting: use a dedicated WezTerm tab
+
+Use a fresh local WezTerm tab **outside herdr** for `ssh-add`, `ssh-copy-id` and subsequent `ssh rpi` connections. Agent and connection errors occurred inside a Mac herdr session and were resolved by using a dedicated tab. A stale `SSH_AUTH_SOCK` may explain `ssh-add: Connection refused`; the separate SSH connection failure was not diagnosed. Retry outside herdr before generating another key.
+
 ## Restore or create a key
 
 Restore `~/.ssh/id_ed25519_rpi` and its `.pub` file from your private backup. If you need a new key instead, create one without overwriting a restored key:
@@ -50,7 +54,3 @@ cat ~/.ssh/id_ed25519_rpi.pub | ssh main@rpi 'umask 077; mkdir -p ~/.ssh; cat >>
 ```
 
 An existing password login may be needed for this first installation. Verify the host identity when connecting, then confirm key-based login with `ssh rpi`. After reimaging a Pi, verify its new host key rather than bypassing host-key checking. The repo does not configure or enforce key-only SSH on Ubuntu.
-
-## Session layout
-
-The preferred workflow is to SSH from a dedicated WezTerm tab rather than nesting the Pi session inside the Mac's herdr session. This is an operating preference, not a requirement enforced by configuration. Start herdr on the Pi if you want remote sessions to survive disconnects.
