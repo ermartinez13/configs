@@ -64,6 +64,16 @@ in
   # Edit-in-place: the real file stays in my repo, ~/.config just points at it.
   home.file.".config/nvim".source =
     config.lib.file.mkOutOfStoreSymlink "${configs}/home/.config/nvim";
+  # Only Markdown parsers/queries, built by Nix for each platform. Neovim's
+  # standard site runtime works with lazy.nvim without an extra plugin/compiler.
+  home.file.".local/share/nvim/site/parser/markdown.so".source =
+    "${pkgs.vimPlugins.nvim-treesitter.parsers.markdown}/parser/markdown.so";
+  home.file.".local/share/nvim/site/parser/markdown_inline.so".source =
+    "${pkgs.vimPlugins.nvim-treesitter.parsers.markdown_inline}/parser/markdown_inline.so";
+  home.file.".local/share/nvim/site/queries/markdown".source =
+    "${pkgs.vimPlugins.nvim-treesitter.queries.markdown}/queries/markdown";
+  home.file.".local/share/nvim/site/queries/markdown_inline".source =
+    "${pkgs.vimPlugins.nvim-treesitter.queries.markdown_inline}/queries/markdown_inline";
   # Only the config file: herdr writes session state into ~/.config/herdr.
   home.file.".config/herdr/config.toml".source =
     config.lib.file.mkOutOfStoreSymlink "${configs}/home/.config/herdr/config.toml";

@@ -63,6 +63,7 @@ For Docker Sandboxes, follow the separate [Mac/Pi installation and copying guide
 - [SSH access](docs/ssh.md): keys and connecting from the Mac.
 - [Karabiner](docs/karabiner.md): permissions, device setup and shortcuts.
 - [Node.js](docs/node.md): the baseline runtime and per-project versions.
+- [Neovim](docs/neovim.md): Markdown rendering and raw editing modes.
 - [Docker Sandboxes](docs/docker-sandboxes.md): installation and clipboard workarounds.
 - [Glossary](docs/glossary.md): the tools and terminology used here.
 
