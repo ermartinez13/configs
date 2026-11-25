@@ -37,6 +37,12 @@ in
     finder.FXPreferredViewStyle = "Nlsv";  # list view by default
     trackpad.Clicking = true;              # tap to click
     ".GlobalPreferences"."com.apple.mouse.scaling" = mouseSpeed;
+    CustomUserPreferences = {
+      # macOS 26: this rule is present when "Show related content" is off.
+      "com.apple.Spotlight".EnabledPreferenceRules = [ "Custom.relatedContents" ];
+      # Spotlight: Help improve Apple Search (2 = opted out).
+      "com.apple.assistant.support"."Search Queries Data Sharing Status" = 2;
+    };
   };
   system.activationScripts.postActivation.text = ''
     # nix-darwin writes user defaults; also set the host-specific tap preference.
