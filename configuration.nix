@@ -104,6 +104,7 @@ in
       "betterdisplay"
       "nordvpn"
       "proton-drive"
+      "raspberry-pi-imager"
       "docker-desktop"
       { name = "docker/tap/sbx"; trusted = true; } # standalone Docker Sandboxes
       "spokenly"
