@@ -34,7 +34,9 @@ in
     WindowManager.StageManagerHideWidgets = true;  # ...or in Stage Manager
     # "Only in Stage Manager": ordinary wallpaper clicks must not reveal widgets.
     WindowManager.EnableStandardClickToShowDesktop = false;
-    finder.FXPreferredViewStyle = "Nlsv";  # list view by default
+    # Default for folders without a saved view; folder-specific settings can override it.
+    finder.FXPreferredViewStyle = "Nlsv";
+    finder.ShowPathbar = true;             # directory breadcrumbs at the bottom
     trackpad.Clicking = true;              # tap to click
     ".GlobalPreferences"."com.apple.mouse.scaling" = mouseSpeed;
     CustomUserPreferences = {

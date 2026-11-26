@@ -27,6 +27,14 @@ BetterDisplay must already be running in the user's graphical session. If it is 
 
 The activation command also requests ProMotion, so adjust that argument for displays without it. See the [BetterDisplay CLI reference](https://betterdisplay.pro/guide/integration/cli-reference/).
 
+## Finder views
+
+The rebuild sets List as Finder's preferred view and enables the path bar (directory breadcrumbs at the bottom of the window). Finder can retain folder-specific view settings, including in `.DS_Store` files, which override the preferred view.
+
+For a folder that opens in another view, press **Command+2** to select List, then **Command+J** for View Options. Enable **Always open in list view** and **Browse in list view** where available. **Use as Defaults** applies the current view options as defaults; it does not clear every folder's saved settings.
+
+After rebuilding, relaunch Finder or log out and back in if the path bar has not appeared. It can also be shown with **View → Show Path Bar** (**Option+Command+P**).
+
 ## Software with manual setup
 
 Spokenly's model and offline mode are configured in the app. Contexts is licensed software installed separately from [contexts.co](https://contexts.co/); it is not declared in the current Homebrew list. The previous Homebrew installation attempt encountered a vendor certificate error; this is historical context, not a check of the vendor's current certificate.
