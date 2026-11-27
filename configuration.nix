@@ -103,6 +103,7 @@ in
       "notion"
       "slack"
       "visual-studio-code"
+      "zed"
       "betterdisplay"
       "nordvpn"
       "proton-drive"
