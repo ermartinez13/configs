@@ -1,0 +1,14 @@
+# Installed as /etc/codex/config.toml, which ranks below ~/.codex/config.toml.
+# Keep these keys out of the user config, or it will override them.
+default_permissions = "main"
+
+[approval_policy.granular]
+sandbox_approval = false
+rules = true
+mcp_elicitations = true
+
+[permissions.main]
+extends = ":workspace"
+
+[permissions.main.filesystem]
+"/Users/main/Library/Mobile Documents/com~apple~CloudDocs" = "deny"

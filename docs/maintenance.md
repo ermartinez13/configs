@@ -15,6 +15,7 @@ Use the [README](../README.md) for rebuild commands and [Philosophy](philosophy.
 | Authored dotfile | `home/`, with a link in `shared/home.nix` or `home.nix` |
 | Claude/Codex instructions | `home/AGENTS.md` |
 | Claude Code settings (Mac sandbox and deny rules) | `home/.claude/settings.json`, linked in `home.nix` |
+| Codex settings (Mac sandbox and deny rules) | `etc/codex/config.toml`, installed to `/etc/codex/config.toml` in `configuration.nix`; rebuild to apply edits |
 | Brave/Chrome extensions | `browserExtensions` in `home.nix` |
 | Imported device configuration | `accessories/` (Keychron keymap and macros) |
 

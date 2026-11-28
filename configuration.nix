@@ -72,6 +72,8 @@ in
     fi
   '';
   environment.variables.HOMEBREW_NO_ANALYTICS = "1";  # brew in your shells
+  # Codex's system config layer; the apps keep ~/.codex/config.toml.
+  environment.etc."codex/config.toml".source = ./etc/codex/config.toml;
   nix-homebrew = {
     enable = true;
     inherit user;
