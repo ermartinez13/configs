@@ -113,6 +113,7 @@ in
       "docker-desktop"
       { name = "docker/tap/sbx"; trusted = true; } # standalone Docker Sandboxes
       "spokenly"
+      "meetily"
       "obsidian"
     ];
   };
