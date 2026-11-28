@@ -39,6 +39,8 @@ in
   # Its runtime files are ignored by home/.config/karabiner/.gitignore.
   home.file.".config/karabiner".source =
     config.lib.file.mkOutOfStoreSymlink "${configs}/home/.config/karabiner";
+  home.file.".config/zed/keymap.json".source =
+    config.lib.file.mkOutOfStoreSymlink "${configs}/home/.config/zed/keymap.json";
   # Mac-only: the sandbox and deny rules name /Users/main paths (iCloud Drive).
   home.file.".claude/settings.json".source =
     config.lib.file.mkOutOfStoreSymlink "${configs}/home/.claude/settings.json";
